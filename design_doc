@@ -41,3 +41,14 @@ Battle Ship Brainstorming:
  Use classes and objects to save game state and systems.
  Simple text input to control game state but possibly look into keyboard inputs (docs: https://processing.org/reference/#input-keyboard)
  Possibly look into ASCII animation rather than instance
+
+ Key words for possible implementation:
+ ANSI escape code: https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+    • could be used for a fancier screen animations, movable cursor, noises, and more
+ Scanner class for basic input: https://www.w3schools.com/java/java_user_input.asp
+    • Faster and cleaner input method
+ MVC (model-view-controller) pattern: https://www.edureka.co/blog/mvc-architecture-in-java/
+    • Separates logic into an easier to edit and understand layers
+
+ Build and design philosophy:
+    Start simple, get a working MVP, refine and expand scope as time permits, use git to track version control and scope expansion
