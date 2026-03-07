@@ -1,0 +1,43 @@
+Battle Ship Brainstorming:
+
+2 Screens, one with your own ships, one for guessing:
+    A B C D E F G H I J K L
+ 1  0 * X 0 0 0 0 0 0 0 0 0 1
+ 2  0 | 0 0 0 0 0 0 0 X 0 0 2
+ 3  0 | 0 0 0 0 0 0 0 0 0 0 3
+ 4  0 | 0 0 - - - 0 0 0 0 0 4
+ 5  0 | 0 | 0 0 0 0 0 0 0 0 5
+ 6  X 0 0 | 0 0 0 0 0 0 0 0 6
+ 7  0 0 0 | 0 0 0 0 0 0 0 0 7
+ 8  0 0 0 0 0 0 0 0 0 0 0 0 8
+ 9  0 0 0 0 0 X 0 0 0 0 0 0 9
+ 10 0 @ @ @ 0 0 0 0 0 0 0 0 10
+ 11 0 0 0 X 0 0 0 0 0 0 0 0 11
+ 12 0 0 0 0 0 0 0 0 0 0 0 0 12
+    A B C D E F G H I J K L
+
+ X = miss
+ 0 = empty
+ | or - = ship space
+ * = hit
+ @ = sink
+
+
+ Invisible Computer State vs CPU
+ Random Board Generation each game
+ Random computer guessing
+ Computer guessing logic on hit:
+	random next direction, then increment 1 away from hit, if on edge of board limit directions
+	on hit continue direction until sink, if no sink reverse direction
+	on miss pick new direction and increment 1 away
+ input("B6") style
+ how to input placing of pieces? - input piece start and orientation (up, down, left, right)
+ animation for a sunk ship]
+ animation for win
+ new game or quit options
+
+ Learning objectives:
+ Get better with version control, git, and github
+ Use classes and objects to save game state and systems.
+ Simple text input to control game state but possibly look into keyboard inputs (docs: https://processing.org/reference/#input-keyboard)
+ Possibly look into ASCII animation rather than instance
