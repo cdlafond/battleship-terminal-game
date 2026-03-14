@@ -9,6 +9,9 @@
 
      Each piece is a Boat object, with individual status'
  */
+
+import java.util.Random;
+
 public class Player {
 
     private int player;
@@ -52,6 +55,65 @@ public class Player {
             if(!boat.getState()){ return boat.getName();}
         }
             return null;
+    }
+
+    public void setRandBoard(){
+        for(Boat boat : this.boats){
+            while(!boat.getState()) {
+                int maxIndex = 12 - boat.getSize() + 1;
+                Random rand = new Random();
+                int row;
+                int col;
+                int dir = rand.nextInt((2 - 1) + 1) + 1;
+                String direction;
+                switch (dir){
+                    case 1:
+                        direction = "DOWN";
+                        row = rand.nextInt((maxIndex - 1) + 1) + 1;
+                        col = 4 + ((rand.nextInt((12 - 1) + 1) + 1) * 2);
+                        break;
+                    case 2:
+                        direction = "RIGHT";
+                        row = rand.nextInt((12 - 1) + 1) + 1;
+                        col = 4 + ((rand.nextInt((maxIndex - 1) + 1) + 1) * 2);
+                        break;
+                    default:
+                        direction = "";
+                        row = 0;
+                        col = 0;
+                        break;
+                }
+                // check to see that there isn't already a piece in the way
+                boolean valid = true;
+                switch (direction) {
+                    case "DOWN":
+                        for (int i = row; i < row + boat.getSize(); i++) {
+                            char[] boardValues = boatBoard.getBoard()[i].toCharArray();
+                            if (boardValues[col] != '0') {
+                                valid = false;
+                                break;
+                            }
+                        }
+                        break;
+                    case "RIGHT":
+                        for (int i = col; i < col + boat.getSize(); i += 2) {
+                            char[] boardValues = boatBoard.getBoard()[row].toCharArray();
+                            if (boardValues[i] != '0') {
+                                valid = false;
+                                break;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                if(valid){
+                    char column = this.boatBoard.getBoard()[0].charAt(col);
+                    String[] input = {""+column+row,direction };
+                    this.boatBoard.setBoatOnBoard(input, boat);
+                }
+            }
+        }
     }
 
 

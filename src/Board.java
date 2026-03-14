@@ -30,6 +30,7 @@ public class Board {
         return this.boardState;
     }
 
+    // the input strings have been validated to be within range before this function is called
     public void setBoatOnBoard(String[] input, Boat boat){
         char column = input[0].charAt(0);
         int colIndex = getColIndex(column);

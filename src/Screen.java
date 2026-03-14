@@ -46,6 +46,10 @@ public class Screen {
 
                     case SETTING:
                         settingScreen(player);
+                        screenState = gameState.PLAYING;
+                        break;
+
+                    case PLAYING:
 
 
                     case QUITING:
