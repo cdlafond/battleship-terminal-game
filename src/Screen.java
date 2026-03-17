@@ -4,6 +4,7 @@
  */
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class Screen {
 
@@ -27,7 +28,7 @@ public class Screen {
         }
 
         // update the input screen
-        public String update(Player player){
+        public String update(Player player, Player computer){
                 switch (screenState) {
                     case gameState.OPENING:
                         String playerResponse = startScreen();
@@ -50,7 +51,30 @@ public class Screen {
                         break;
 
                     case PLAYING:
+                        while(player.confirmBoardStates()){
+                            guessingScreen(player, computer);
+                            compRandomGuess(player);
+                        }
+                        // while loop only breaks if win condition is met
+                        // check if win or loose then present win / loose screen and move
+                        // back to new game screen
+                        if(player.checkWin()){
+                            screenState = gameState.WIN;
+                            break;
+                        } else {
+                            screenState = gameState.GAMEOVER;
+                            break;
+                        }
 
+                    case WIN:
+                        winScreen();
+                        screenState = gameState.QUITING;
+                        break;
+
+                    case GAMEOVER:
+                        loseScreen();
+                        screenState = gameState.QUITING;
+                        break;
 
                     case QUITING:
                         quitScreen();
@@ -205,6 +229,118 @@ public class Screen {
                 return checkValidInput(getter, boat, boatBoard);
             }
         }
+
+
+        public void guessingScreen(Player player, Player computer){
+            String[] boatBoard = player.getBoatBoard();
+            String[] guessBoard = player.getGuessBoard();
+            int j = boatBoard.length;
+            for (int i = 0; i < j; i++) {
+                System.out.println(boatBoard[i] + guessBoard[i]);
+            }
+            System.out.println("         Player Board                  Guessing Board       ");
+            System.out.println();
+            System.out.println("Where would you like to attack?");
+            System.out.println("Input coordinate: (eg: A5 or G3 or A7):");
+
+            String in = scan.nextLine().toUpperCase();
+            while (!validateGuessInput(in, guessBoard)){
+                System.out.println("Invalid input, please guess a valid coordinate:");
+                in = scan.nextLine().toUpperCase();
+            }
+
+            // check if hit and update board state
+            if(computer.getBoatBoardClass().checkHit(in)){
+                System.out.println("!!!! HIT !!!!");
+                System.out.println("~~~~~~~~~~~~~");
+                player.getGuessBoardClass().updateGuess(in, true);
+            } else{
+                System.out.println("===  MISS  ===");
+                System.out.println("~~~~~~~~~~~~~~");
+                player.getGuessBoardClass().updateGuess(in, false);
+            }
+        }
+
+        private void compRandomGuess(Player player){
+            Random rand = new Random();
+            int row = rand.nextInt((12 - 1) + 1) + 1;
+            int col = 4 + (rand.nextInt(12) * 2);
+            String in = "" + Board.getColchar(col) + row;
+            System.out.println("Computer guessed: "+in);
+            if(player.getBoatBoardClass().checkHit(in)){
+                System.out.println("!!!! HIT !!!!");
+                System.out.println("~~~~~~~~~~~~~");
+            } else{
+                System.out.println("===  MISS  ===");
+                System.out.println("~~~~~~~~~~~~~~");
+            }
+
+        }
+
+
+        // return true if valid input
+        private boolean validateGuessInput(String str, String[] guessBoard){
+            char col = str.charAt(0);
+            int row = 0;
+            try {
+                row = Integer.parseInt(str.substring(1).trim());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+
+            if (str == null || str.isEmpty()) { // Check for null or empty string
+                return false;
+            }
+
+            if(col >= 'A' && col <= 'L'){
+                if (row >= 1 && row <= 12){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void winScreen(){
+            String[] winScreen =
+                    {       "    A B C D E F G H I J K L   ",
+                            " 1                          1 ",
+                            " 2                          2 ",
+                            " 3             WOW          3 ",
+                            " 4                          4 ",
+                            " 5           YOU WON!       5 ",
+                            " 6                          6 ",
+                            " 7      CONGRATULATIONS     7 ",
+                            " 8                          8 ",
+                            " 9     ~~~~~~~~~~~~~~~~~    9 ",
+                            " 10                         10",
+                            " 11                         11",
+                            " 12                         12",
+                            "    A B C D E F G H I J K L   "};
+            for(String line : winScreen){
+                System.out.println(line);
+            }
+        }
+
+    private void loseScreen(){
+        String[] loseScreen =
+                {       "    A B C D E F G H I J K L   ",
+                        " 1                          1 ",
+                        " 2                          2 ",
+                        " 3             AWE          3 ",
+                        " 4                          4 ",
+                        " 5           YOU LOST!       5 ",
+                        " 6                          6 ",
+                        " 7             HOW?         7 ",
+                        " 8                          8 ",
+                        " 9     ~~~~~~~~~~~~~~~~~    9 ",
+                        " 10                         10",
+                        " 11                         11",
+                        " 12                         12",
+                        "    A B C D E F G H I J K L   "};
+        for(String line : loseScreen){
+            System.out.println(line);
+        }
+    }
 
         public void quitScreen(){
             String[] closingScreen =

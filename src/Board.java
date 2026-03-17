@@ -95,4 +95,72 @@ public class Board {
         };
     }
 
+    public static char getColchar(int in){
+        return switch (in) {
+            case 4 -> 'A';
+            case 6 -> 'B';
+            case 8 -> 'C';
+            case 10 -> 'D';
+            case 12 -> 'E';
+            case 14 -> 'F';
+            case 16 -> 'G';
+            case 18 -> 'H';
+            case 20 -> 'I';
+            case 22 -> 'J';
+            case 24 -> 'K';
+            case 26 -> 'L';
+            default -> ' ';
+        };
+    }
+
+    public int returnHits(){
+        int hits = 0;
+        for (int i = 0; i < this.boardState.length; i++) {
+            for (int j = 4; j < this.boardState[i].length(); j+= 2) {
+                if(this.boardState[i].charAt(j) == '*') { hits ++; }
+            }
+
+        }
+        return hits;
+    }
+
+    // returns true if board is still alive state
+    public boolean checkAlive(){
+        for (int i = 0; i < this.boardState.length; i++) {
+            for (int j = 4; j < this.boardState[i].length(); j+= 2) {
+                if(this.boardState[i].charAt(j) == '|' || this.boardState[i].charAt(j) == '-') { return true; }
+            }
+
+        }
+        return false;
+    }
+
+    public boolean checkHit(String str){
+        int col = getColIndex(str.charAt(0));
+        int row = Integer.parseInt(str.substring(1).trim());
+        char checker = this.boardState[row].charAt(col);
+        char[] charArray = this.boardState[row].toCharArray();
+        if(checker == '|' || checker == '-'){
+            charArray[col] = '*';
+            this.boardState[row] = new String(charArray);
+            return true;
+        } else {
+            charArray[col] = 'X';
+            this.boardState[row] = new String(charArray);
+            return false;
+        }
+    }
+
+    public void updateGuess(String str, boolean hit){
+        int col = getColIndex(str.charAt(0));
+        int row = Integer.parseInt(str.substring(1).trim());
+        char[] charArray = this.boardState[row].toCharArray();
+        if (hit) {
+            charArray[col] = '*';
+        } else {
+            charArray[col] = 'X';
+        }
+        this.boardState[row] = new String(charArray);
+    }
+
 }

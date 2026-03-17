@@ -11,12 +11,11 @@ void main() {
     Player player1 = new Player(1);
     Player computer = new Player(0);
     Screen game = new Screen();
-    game.update(player1);
+    game.update(player1, computer);
     // randomly create the computer player board
     computer.setRandBoard();
-    // the only two options at this point are to go into setting pieces mode, or quite
-    // so to get here they haven't quite at this point & we cont to place the pieces
-
+    game.update(player1, computer);
+    game.update(player1, computer);
 
 
 }

@@ -33,6 +33,10 @@ public class Player {
         return boatBoard.getBoard();
     }
 
+    public Board getBoatBoardClass(){ return boatBoard;}
+
+    public Board getGuessBoardClass(){ return guessBoard;}
+
     //input has been validated to be a valid array representing a char num coordinate and a direction:
     // {"A10","DOWN"}
     //input has also been validated to fit in board
@@ -70,12 +74,12 @@ public class Player {
                     case 1:
                         direction = "DOWN";
                         row = rand.nextInt((maxIndex - 1) + 1) + 1;
-                        col = 4 + ((rand.nextInt((12 - 1) + 1) + 1) * 2);
+                        col = 4 + (rand.nextInt(12) * 2);
                         break;
                     case 2:
                         direction = "RIGHT";
                         row = rand.nextInt((12 - 1) + 1) + 1;
-                        col = 4 + ((rand.nextInt((maxIndex - 1) + 1) + 1) * 2);
+                        col = 4 + (rand.nextInt(maxIndex) * 2);
                         break;
                     default:
                         direction = "";
@@ -114,6 +118,19 @@ public class Player {
                 }
             }
         }
+    }
+
+    // meant to return a true if the player is still alive and hasn't killed all of his opponenets pieces
+    public boolean confirmBoardStates(){
+        // first check if opponent is dead by counting the numebr of hits, a dead opponent will have 17 hits
+        if (this.guessBoard.returnHits() == 17) { return false; }
+        if (!this.boatBoard.checkAlive()){ return false; }
+        return true;
+    }
+
+    public boolean checkWin(){
+        if (this.guessBoard.returnHits() == 17) { return true; }
+        return false;
     }
 
 
