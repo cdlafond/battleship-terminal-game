@@ -1,2 +1,57 @@
 Writing down my thoughts and learning points after I complete the project:
-•
+
+Summary:
+Overall the project was fun, I got to challenge myself on git, although not extremely, and I implemented some systems
+that were probably a less efficient way of completing tasks, but often did so in such a way for learning purposes.
+I tried to challenge myself with more modern concepts that I didn't learn back in my university days, like enhanced for
+loops for example, and probably over used classes to the detriment of development.
+
+High level thoughts coming out of the project:
+• Write down your current thought process when you walk away from the computer, as getting back in the mindset
+    of what you are working on takes a bit of time and writing down where you left off speeds up that time significantly
+• Just start writing code. While planning early and sticking to scope is important, being able to plan for future
+    problems will come with experience, and experience doesn't happen without coding. So just start writing, and come
+    back and fix compounding errors as needed if required.
+• I hope to get better with the IDE to increase speed significantly. Often found myself doing a task, knowing what
+    needed to be done, but not knowing the fastest way to complete the task. For example, changing the name of a
+    variable was often avoided later in writing a method because of how often the variable was used. I know there's a
+    find and replace method / hotkey but could never get it to stick in my brain.
+• In the interest of saving time and moving on with the coursework I've stopped short of a few goals. I would have
+    enjoyed trying to animate the input screens, clearing the terminal between each frame rather than a scrolling
+    screen, but couldn't find the time to do so. I also did no ship sinking validation, which I think is a big loss to
+    the gameplay. I wanted to implement some guessing logic to the computer as well, rather than just complete random,
+    but ran out of time to do so.
+
+Specific thoughts:
+• The Board class has a getColIndex() and getColChar() method that's a big switch statement. I know there's
+    mathematically a much better way of doing this, just didn't spend the time figuring it out. Initial thoughts would
+    be something similar to how I did the max row and col index math, knowing Char 'A' = 65 or something like that you
+    can work backwards to the index, but the switch statement was easy to understand, and fast enough for this project.
+    And using a method, I could always change the switch statement to the math and return the value and it would be
+    minimal code updating.
+• Next time I would probably store more data at the Boat level, and possibly just re-render / calculate the board state
+    each time I needed to based on the boat data. Then I can store hit data in the boats, and do the classic "you sunk
+    my battleship!" line in the terminal. I could check game state based on a players boats inventory instead of
+    counting the board. This would also make the game more expandable, you could have custom boats, custom skills to
+    attack more than one square for example, etc etc.
+• Implement a while loop in Main.java to loop through the gameplay options would have been a better system. A user
+    could also initiate a new game without having to re-launch the program that way.
+• I need to do a better job of validating inputs from the user, and from the random computer guesses. There has to be a
+    better way than what I was doing.
+• The Screen class became more of a controller in the MVC system than I would have liked. I think if I did as I talked
+    about above where I stored more data in boats I could have really used the Screen class as a rendering system and
+    kept the enums of game state in a separate class.
+
+I had claude code review my project and give me feedback, here's what I've learned:
+• I learned a better null input check, mine is out of order @ line 283 in the Screen class, I didn't see that bug while
+    running the game, but after input testing it myself I confirmed.
+• setBoat() should toggle using this.state = true; and I agree, flipping isn't correct for it's use case.
+• I duplicated code in a few places, and knew I was doing it at the time. In an effort to save time implementing I
+    copy and pasted the logic rather than pulling it out into it's own method call. In the future once I get better with
+    the IDE I think I'll be faster and more logical about pulling out duplicate code into a method.
+• checkValidInput is a recursive function. It's better to do that in a while loop, but I did it this way on purpose to
+    practice recursivity. Risk of stackOverflowError is understood.
+• AI told me in seconds the math for the getColIndex and getColChar... oof
+• I need to get better at some naming convention, I didn't know the enum naming convention.
+• Computer can re-guess the same square, I knew this but forgot to point it out in specific thoughts above. I think I
+    could easily implement a better system there, but have run out of time.
